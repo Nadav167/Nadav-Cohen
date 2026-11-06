@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nadav Cohen – Software Engineering Student</title>
+<meta name="description" content="Nadav Cohen, software engineering student at the Technion. Projects: Ma Roim, Pitron Shetach and BoredGames.">
+<meta property="og:title" content="Nadav Cohen – Software Engineering Student">
+<meta property="og:description" content="Three products I built and shipped, with trailers.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314181b'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='28' fill='%23f2f4f3' text-anchor='middle'%3ENC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f2f4f3;
+    --ink: #14181b;
+    --muted: #5e676c;
+    --line: #d3d9dc;
+    --focus: #2b4bd8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 18px/1.6 Rubik, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- top ---------- */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; font-size: 16px; }
+  .top nav { display: flex; gap: 22px; }
+  .top a { text-decoration: none; color: var(--muted); }
+  .top a:hover { color: var(--ink); }
+  .mark { font-weight: 700; color: var(--ink) !important; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 72px 0 88px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: end; }
+  .hero h1 {
+    font-weight: 800;
+    font-size: clamp(56px, 10vw, 128px);
+    line-height: .9;
+    letter-spacing: -0.045em;
+    margin: 0 0 28px;
+  }
+  .hero .role { font-size: 22px; line-height: 1.4; margin: 0; max-width: 30ch; }
+  .about p { margin: 0 0 16px; max-width: 46ch; color: #2c3338; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 999px;
+    font: 500 16px/1 Rubik, sans-serif; text-decoration: none;
+    border: 1.5px solid var(--ink);
+  }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.solid:hover { background: #2c3338; }
+
+  /* ---------- projects: each one takes its own product's colors ---------- */
+  .project { padding: 96px 0; color: var(--fg); background: var(--bg); }
+  .project.ma-roim { --bg: #100d0a; --fg: #f4ede4; --soft: #b9ab98; --acc: #ffb547; --rule: #2e261d; }
+  .project.pitron  { --bg: #1f4d3a; --fg: #fbf8ef; --soft: #c4d6c9; --acc: #a8d8bc; --rule: #2f6650; }
+  .project.bored   { --bg: #1b1d48; --fg: #ffffff; --soft: #c3c5ef; --acc: #ffd84d; --rule: #2e3170; }
+
+  .p-head { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; }
+  .p-head img { width: 64px; height: 64px; border-radius: 16px; flex: none; }
+  .p-head h2 { margin: 0; font-size: clamp(34px, 5vw, 52px); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
+  .p-head h2 span { font-weight: 500; color: var(--soft); margin-inline-start: 12px; font-size: .6em; letter-spacing: 0; }
+  .p-head .tag { margin-inline-start: auto; border: 1.5px solid var(--acc); color: var(--acc); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+
+  .p-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: start; }
+
+  .screen { position: relative; }
+  .frame {
+    aspect-ratio: 16 / 9; width: 100%;
+    border-radius: 14px; overflow: hidden;
+    background: #000; box-shadow: 0 0 0 1px var(--rule);
+  }
+  .frame video { width: 100%; height: 100%; display: block; background: #000; }
+  .placeholder {
+    width: 100%; height: 100%; display: grid; place-items: center; text-align: center;
+    background: var(--rule); color: var(--soft); font-size: 16px; padding: 24px;
+  }
+  .placeholder a { color: var(--acc); }
+  .lang { display: flex; gap: 6px; margin-top: 14px; }
+  .lang button {
+    font: 500 14px/1 Rubik, sans-serif; color: var(--soft);
+    background: transparent; border: 1.5px solid var(--rule); border-radius: 999px;
+    padding: 8px 14px; cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] { color: var(--bg); background: var(--acc); border-color: var(--acc); }
+
+  .p-text .lede { font-size: 21px; line-height: 1.45; margin: 0 0 22px; }
+  .p-text ul { margin: 0 0 26px; padding: 0; list-style: none; }
+  .p-text li { padding: 10px 0; border-top: 1px solid var(--rule); color: var(--soft); font-size: 16px; line-height: 1.5; }
+  .p-text li strong { color: var(--fg); font-weight: 500; }
+  .stack { font-size: 15px; color: var(--soft); margin: 0 0 24px; }
+  .p-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .p-links a {
+    padding: 11px 18px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 15px;
+    border: 1.5px solid var(--acc); color: var(--acc);
+  }
+  .p-links a.go { background: var(--acc); color: var(--bg); }
+  .p-links a:hover { filter: brightness(1.12); }
+  .project :focus-visible { outline-color: var(--acc); }
+
+  /* ---------- contact ---------- */
+  .contact { padding: 96px 0 72px; }
+  .contact h2 { font-size: clamp(34px, 5vw, 52px); letter-spacing: -0.03em; line-height: 1; margin: 0 0 18px; font-weight: 800; }
+  .contact p { color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+  footer { border-top: 1px solid var(--line); padding: 22px 0 40px; color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 860px) {
+    body { font-size: 17px; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 0 64px; }
+    .p-grid { grid-template-columns: 1fr; gap: 32px; }
+    .project { padding: 64px 0; }
+    .p-head { flex-wrap: wrap; }
+    .p-head .tag { margin-inline-start: 0; }
+    .top nav a:not(.cv) { display: none; }
+  }
+  @media (max-width: 420px) {
+    .wrap { padding: 0 16px; }
+    .p-head h2 span { display: block; margin: 6px 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#">Nadav Cohen</a>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a class="cv" href="Nadav_Cohen_CV.pdf">CV (PDF)</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Nadav<br>Cohen</h1>
+      <p class="role">Software engineering student at the Technion, building and shipping full-stack products.</p>
+    </div>
+    <div class="about">
+      <p>I'm a fourth-year student in Haifa, looking for a student position in software development or QA automation.</p>
+      <p>Outside of my courses I've built three live products: a movie and TV catalog with an AI recommender, a camping map of Israel with an AI trip planner, and a real-time card-game app. Before university I was a QA tester for medical devices at Biosense Webster.</p>
+      <div class="actions">
+        <a class="btn solid" href="Nadav_Cohen_CV.pdf">Download CV</a>
+        <a class="btn" href="https://github.com/Nadav167">GitHub</a>
+        <a class="btn" href="mailto:nadav167@gmail.com">Email me</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<main id="projects">
+
+  <section class="project ma-roim" aria-labelledby="p1">
+    <div class="wrap">
+      <div class="p-head">
+        <img src="img/ma-roim.png" alt="" width="64" height="64">
+        <h2 id="p1">Ma Roim<span lang="he">מה רואים</span></h2>
+        <span class="tag">Live</span>
+      </div>
+      <div class="p-grid">
+        <div class="screen" data-trailer="ma-roim"></div>
+        <div class="p-text">
+          <p class="lede">What to watch tonight: about 58,000 US and Israeli movies and series in Hebrew and English, with an AI that recommends from what's actually on your streaming services.</p>
+          <ul>
+            <li><strong>Data pipeline</strong> in Python that merges Wikidata, IMDb, TMDB and Wikipedia, rebuilt every week by GitHub Actions.</li>
+            <li><strong>AI recommendations</strong> grounded in the catalog: the model searches the database through tools, so it can only suggest real titles.</li>
+            <li><strong>Accounts</strong> with a personal list and likes, protected by row-level security in PostgreSQL.</li>
+          </ul>
+          <p class="stack">Python · JavaScript · PostgreSQL (Supabase) · GitHub Actions · Vercel · Claude API</p>
+          <div class="p-links">
+            <a class="go" href="https://ma-roim-site.vercel.app">Open the site</a>
+            <a href="https://github.com/Nadav167/Ma-Roim">Code on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project pitron" aria-labelledby="p2">
+    <div class="wrap">
+      <div class="p-head">
+        <img src="img/pitron-shetach.png" alt="" width="64" height="64">
+        <h2 id="p2">Pitron Shetach<span lang="he">פתרון שטח</span></h2>
+        <span class="tag">Live</span>
+      </div>
+      <div class="p-grid">
+        <div class="screen" data-trailer="pitron"></div>
+        <div class="p-text">
+          <p class="lede">Every camping and night-parking site in Israel on one map, about 400 of them, with an AI that plans a trip around them.</p>
+          <ul>
+            <li><strong>One codebase</strong> for the website, iPhone and Android, in Hebrew (right-to-left) and English.</li>
+            <li><strong>Data collection</strong> from OpenStreetMap and public listings, with de-duplication, translation and photos.</li>
+            <li><strong>AI trip planner</strong> that finds nearby places, saves itineraries to your account and exports them to PDF.</li>
+          </ul>
+          <p class="stack">TypeScript · React Native (Expo) · Node.js · PostgreSQL + PostGIS · Leaflet · Claude API</p>
+          <div class="p-links">
+            <a class="go" href="https://pitaron-shetach.vercel.app">Open the site</a>
+            <a href="https://github.com/Nadav167/Pitaron-Shetach">Code on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project bored" aria-labelledby="p3">
+    <div class="wrap">
+      <div class="p-head">
+        <img src="img/boredgames.png" alt="" width="64" height="64">
+        <h2 id="p3">BoredGames</h2>
+        <span class="tag">In progress</span>
+      </div>
+      <div class="p-grid">
+        <div class="screen" data-trailer="bored"></div>
+        <div class="p-text">
+          <p class="lede">Card and board games to play with friends or against bots, as an app you install on your phone.</p>
+          <ul>
+            <li><strong>Real-time multiplayer</strong> with friends, invites and online status, synced through Firebase.</li>
+            <li><strong>Taki</strong>, the Israeli card game, for 2–8 players, with a rules engine kept separate from the interface.</li>
+            <li><strong>More games</strong> are on the way.</li>
+          </ul>
+          <p class="stack">JavaScript · Firebase Realtime Database · Firebase Auth · PWA</p>
+          <div class="p-links">
+            <a class="go" href="https://boredgames-il.vercel.app">Try it</a>
+            <a href="https://github.com/Nadav167/BoredGames">Code on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="wrap">
+  <section class="contact" id="contact">
+    <h2>Let's talk</h2>
+    <p>I'm looking for a student position in Haifa or the north, 2–3 days a week. The quickest way to reach me is email or phone.</p>
+    <div class="actions">
+      <a class="btn solid" href="mailto:nadav167@gmail.com">nadav167@gmail.com</a>
+      <a class="btn" href="tel:+972504217070">050-4217070</a>
+      <a class="btn" href="Nadav_Cohen_CV.pdf">Download CV</a>
+    </div>
+  </section>
+  <footer>Nadav Cohen · Haifa, Israel</footer>
+</div>
+
+<script>
+  // Trailers: add files to videos/ with these names and they appear automatically.
+  const TRAILERS = {
+    'ma-roim': { en: 'videos/ma-roim-en.mp4', he: 'videos/ma-roim-he.mp4', site: 'https://ma-roim-site.vercel.app' },
+    'pitron':  { en: 'videos/pitron-shetach-en.mp4', he: 'videos/pitron-shetach-he.mp4', site: 'https://pitaron-shetach.vercel.app' },
+    'bored':   { site: 'https://boredgames-il.vercel.app' }
+  };
+
+  document.querySelectorAll('[data-trailer]').forEach(box => {
+    const t = TRAILERS[box.dataset.trailer];
+    const langs = ['en', 'he'].filter(l => t[l]);
+    const frame = document.createElement('div');
+    frame.className = 'frame';
+    box.appendChild(frame);
+
+    const empty = () => {
+      box.querySelector('.lang')?.remove();
+      frame.innerHTML = `<div class="placeholder"><p>Trailer coming soon.<br><a href="${t.site}">See it live instead</a></p></div>`;
+    };
+    if (!langs.length) { empty(); return; }
+
+    const video = document.createElement('video');
+    video.controls = true;
+    video.preload = 'metadata';
+    video.playsInline = true;
+    video.addEventListener('error', empty);
+    frame.appendChild(video);
+
+    const show = lang => {
+      video.poster = t[lang].replace('.mp4', '.jpg');
+      video.src = t[lang];
+      bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+    };
+
+    const bar = document.createElement('div');
+    bar.className = 'lang';
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'Trailer language');
+    langs.forEach(l => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.lang = l;
+      b.textContent = l === 'en' ? 'English' : 'עברית';
+      if (l === 'he') b.lang = 'he';
+      b.onclick = () => show(l);
+      bar.appendChild(b);
+    });
+    if (langs.length > 1) box.appendChild(bar);
+    show('en');
+  });
+</script>
+</body>
+</html>

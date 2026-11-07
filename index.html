@@ -41,10 +41,10 @@
   .mark { font-weight: 700; color: var(--ink) !important; }
 
   /* ---------- hero ---------- */
-  .hero { padding: 56px 0 88px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 64px; align-items: center; }
-  .hero .role { margin-bottom: 28px !important; }
-  .portrait { margin: 0; }
-  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px; }
+  .hero { padding: 64px 0 88px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: end; }
+  .name-row { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px); margin-bottom: 28px; }
+  .name-row h1 { margin: 0 !important; }
+  .avatar { width: clamp(104px, 17vw, 220px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; flex: none; }
   .hero h1 {
     font-weight: 800;
     font-size: clamp(56px, 10vw, 128px);
@@ -121,9 +121,7 @@
 
   @media (max-width: 860px) {
     body { font-size: 17px; }
-    .hero { grid-template-columns: 1fr; gap: 28px; padding: 24px 0 64px; }
-    .portrait { order: -1; max-width: 260px; }
-    .portrait img { aspect-ratio: 1 / 1; object-position: 0% 45%; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 32px 0 64px; }
     .p-grid { grid-template-columns: 1fr; gap: 32px; }
     .project { padding: 64px 0; }
     .p-head { flex-wrap: wrap; }
@@ -149,13 +147,16 @@
   </header>
 
   <section class="hero">
-    <div class="intro">
-      <h1>Nadav<br>Cohen</h1>
-      <p class="role">Software engineering student at the Technion, building and shipping full-stack products.</p>
-      <div class="about">
-        <p>I'm a fourth-year student in Haifa, looking for a student position in software development or QA automation.</p>
-        <p>Outside of my courses I've built three live products: a movie and TV catalog with an AI recommender, a camping map of Israel with an AI trip planner, and a real-time card-game app. Before university I was a QA tester for medical devices at Biosense Webster.</p>
+    <div>
+      <div class="name-row">
+        <img class="avatar" src="img/nadav.jpg" alt="Nadav Cohen" width="600" height="600">
+        <h1>Nadav<br>Cohen</h1>
       </div>
+      <p class="role">Software engineering student at the Technion, building and shipping full-stack products.</p>
+    </div>
+    <div class="about">
+      <p>I'm a fourth-year student in Haifa, looking for a student position in software development or QA automation.</p>
+      <p>Outside of my courses I've built three live products: a movie and TV catalog with an AI recommender, a camping map of Israel with an AI trip planner, and a real-time card-game app. Before university I was a QA tester for medical devices at Biosense Webster.</p>
       <div class="actions">
         <a class="btn solid" href="Nadav_Cohen_CV.pdf">Download CV</a>
         <a class="btn" href="https://github.com/Nadav167">GitHub</a>
@@ -163,9 +164,6 @@
         <a class="btn" href="mailto:nadav167@gmail.com">Email me</a>
       </div>
     </div>
-    <figure class="portrait">
-      <img src="img/nadav.jpg" alt="Nadav Cohen on the coast near Haifa" width="640" height="800">
-    </figure>
   </section>
 </div>
 

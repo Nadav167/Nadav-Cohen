@@ -288,11 +288,14 @@
     let queued = false;
     function paint() {
       queued = false;
-      const vh = innerHeight, probe = vh * 0.6, zone = vh * 0.5;
+      // Each blend runs while the next section's top edge moves from 85% to 35% of the screen height,
+      // but never before you start scrolling, so the page always opens in its first colors.
+      const vh = innerHeight, y = scrollY;
       let i = 0, t = 0;
       for (let k = 1; k < stops.length; k++) {
-        const edge = stops[k].el.getBoundingClientRect().top;
-        const p = (probe - (edge - zone / 2)) / zone;
+        const edge = stops[k].el.getBoundingClientRect().top + y;
+        const start = Math.max(0, edge - vh * 0.85), end = Math.max(start + vh * 0.3, edge - vh * 0.35);
+        const p = (y - start) / (end - start);
         if (p > 0) { i = k - 1; t = Math.min(1, p); }
       }
       const a = parsed[i], b = parsed[Math.min(i + 1, parsed.length - 1)];

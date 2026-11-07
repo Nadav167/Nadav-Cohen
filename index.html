@@ -67,9 +67,11 @@
 
   /* ---------- projects: each one takes its own product's colors ---------- */
   .project { padding: 96px 0; color: var(--fg); background: var(--bg); }
-  .project.ma-roim { --bg: #100d0a; --fg: #f4ede4; --soft: #b9ab98; --acc: #ffb547; --rule: #2e261d; }
-  .project.pitron  { --bg: #1f4d3a; --fg: #fbf8ef; --soft: #c4d6c9; --acc: #a8d8bc; --rule: #2f6650; }
-  .project.bored   { --bg: #1b1d48; --fg: #ffffff; --soft: #c3c5ef; --acc: #ffd84d; --rule: #2e3170; }
+  /* With JS on, the whole page shares one set of colors that blends from project to project as you scroll */
+  html.morph .project { background: transparent; }
+  html:not(.morph) .project.ma-roim { --bg: #100d0a; --fg: #f4ede4; --soft: #b9ab98; --acc: #ffb547; --rule: #2e261d; }
+  html:not(.morph) .project.pitron  { --bg: #1f4d3a; --fg: #fbf8ef; --soft: #c4d6c9; --acc: #a8d8bc; --rule: #2f6650; }
+  html:not(.morph) .project.bored   { --bg: #1b1d48; --fg: #ffffff; --soft: #c3c5ef; --acc: #ffd84d; --rule: #2e3170; }
 
   .p-head { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; }
   .p-head img { width: 64px; height: 64px; border-radius: 16px; flex: none; }
@@ -264,6 +266,47 @@
 </div>
 
 <script>
+  // Scroll color morph: each part of the page has a palette; between two parts the colors blend smoothly.
+  (() => {
+    const light = { bg: '#f2f4f3', fg: '#14181b', soft: '#5e676c', acc: '#14181b', rule: '#d3d9dc' };
+    const themes = {
+      'ma-roim': { bg: '#100d0a', fg: '#f4ede4', soft: '#b9ab98', acc: '#ffb547', rule: '#2e261d' },
+      'pitron':  { bg: '#1f4d3a', fg: '#fbf8ef', soft: '#c4d6c9', acc: '#a8d8bc', rule: '#2f6650' },
+      'bored':   { bg: '#1b1d48', fg: '#ffffff', soft: '#c3c5ef', acc: '#ffd84d', rule: '#2e3170' }
+    };
+    const stops = [
+      { el: document.querySelector('.hero'), pal: light },
+      ...[...document.querySelectorAll('.project')].map(el => ({ el, pal: themes[el.classList[1]] })),
+      { el: document.getElementById('contact'), pal: light }
+    ];
+    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const parsed = stops.map(s => Object.fromEntries(Object.entries(s.pal).map(([k, v]) => [k, hex(v)])));
+    const mix = (a, b, t) => 'rgb(' + a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',') + ')';
+    const root = document.documentElement;
+    root.classList.add('morph');
+
+    let queued = false;
+    function paint() {
+      queued = false;
+      const vh = innerHeight, probe = vh * 0.6, zone = vh * 0.5;
+      let i = 0, t = 0;
+      for (let k = 1; k < stops.length; k++) {
+        const edge = stops[k].el.getBoundingClientRect().top;
+        const p = (probe - (edge - zone / 2)) / zone;
+        if (p > 0) { i = k - 1; t = Math.min(1, p); }
+      }
+      const a = parsed[i], b = parsed[Math.min(i + 1, parsed.length - 1)];
+      const c = {}; for (const k in a) c[k] = mix(a[k], b[k], t);
+      const set = (n, v) => root.style.setProperty(n, v);
+      set('--bg', c.bg); set('--fg', c.fg); set('--soft', c.soft); set('--acc', c.acc); set('--rule', c.rule);
+      set('--paper', c.bg); set('--ink', c.fg); set('--muted', c.soft); set('--line', c.rule);
+    }
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+    addEventListener('scroll', queue, { passive: true });
+    addEventListener('resize', queue);
+    paint();
+  })();
+
   // Trailers: add files to videos/ with these names and they appear automatically.
   const TRAILERS = {
     'ma-roim': { en: 'videos/ma-roim-en.mp4', he: 'videos/ma-roim-he.mp4', site: 'https://ma-roim-site.vercel.app' },
